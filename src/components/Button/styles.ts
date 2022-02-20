@@ -20,5 +20,5 @@ export const Title = styled.Text`
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary_500};
 
-  color: ${({ theme }) => theme.colors.shape};
+  color: ${({ theme }) => theme.colors.background_secondary};
 `;
