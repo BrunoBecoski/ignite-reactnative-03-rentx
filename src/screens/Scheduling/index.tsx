@@ -28,8 +28,8 @@ export function Scheduling(){
       <Header>
         <StatusBar 
           barStyle="light-content"
-          translucent
           backgroundColor="transparent"
+          translucent
         />
         <BackButton 
           onPress={() => {}}
