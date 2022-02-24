@@ -22,7 +22,7 @@ import {
   MyCarsButton
 } from './styles';
 
-export function Home(){
+export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,7 +66,7 @@ export function Home(){
             height={RFValue(12)}
           />
           <TotalCars>
-            Total de 12 carros
+            Total de {cars.length} carros
           </TotalCars>
         </HeaderContent>
       </Header>

@@ -30,7 +30,7 @@ interface CalendarProps {
 }
 
 
-function Calendar({ markedDates, onDayPress }: CalendarProps){
+function Calendar({ markedDates, onDayPress }: CalendarProps) {
   const theme = useTheme();
 
   return (

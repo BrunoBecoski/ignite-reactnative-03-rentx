@@ -13,7 +13,7 @@ interface Props extends RectButtonProps {
 export function ConfirmButton({
   title,
   ...rest
-}: Props){
+}: Props) {
   return (
     <Container
       {...rest}

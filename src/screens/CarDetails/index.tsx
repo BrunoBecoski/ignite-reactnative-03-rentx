@@ -31,7 +31,7 @@ interface Params {
   car: CarDTO;
 }
 
-export function CarDetails(){
+export function CarDetails() {
   const navigation = useNavigation();
   const routes = useRoute();
   const { car } = routes.params as Params;
@@ -57,7 +57,7 @@ export function CarDetails(){
 
       <CarImages>
         <ImageSlider 
-          imageUrl={car.photos}
+          imagesUrl={car.photos}
         />
       </CarImages>
 

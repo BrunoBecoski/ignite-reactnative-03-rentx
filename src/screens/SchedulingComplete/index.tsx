@@ -15,7 +15,7 @@ import {
   Footer
 } from './styles';
 
-export function SchedulingComplete(){
+export function SchedulingComplete() {
   const { width } = useWindowDimensions();
   const navigation = useNavigation();
 

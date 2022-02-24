@@ -21,7 +21,7 @@ export function Button({
   onPress,
   enabled = true,
   loading = false
-}: Props){
+}: Props) {
   const theme = useTheme();
 
   return (
