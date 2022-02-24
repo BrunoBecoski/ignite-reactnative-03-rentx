@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
 
 import {
@@ -11,13 +12,15 @@ interface Props {
   color?: string;
   onPress: () => void;
   enabled?: boolean;
+  loading?: boolean;
 }
 
 export function Button({
   title,
   color,
   onPress,
-  enabled = true
+  enabled = true,
+  loading = false
 }: Props){
   const theme = useTheme();
 
@@ -26,10 +29,13 @@ export function Button({
       color={color ? color : theme.colors.main} 
       onPress={onPress} 
       enabled={enabled}
+      loading={loading}
     >
-      <Title>
-        {title}
-      </Title>
+      {
+        loading 
+          ? <ActivityIndicator color={theme.colors.shape} />
+          : <Title>{title}</Title>
+      }
     </Container>
   );
 }

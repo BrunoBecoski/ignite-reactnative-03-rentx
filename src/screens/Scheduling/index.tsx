@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { StatusBar } from 'react-native';
 import { format } from 'date-fns';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
-import { StatusBar } from 'react-native';
 
 import { CarDTO } from '../../dtos/CarDTO';
 import { getPlatformDate } from '../../utils/getPlatformDate';
@@ -16,7 +16,6 @@ import {
  } from '../../components/Calendar';
 
 import ArrowSvg from '../../assets/arrow.svg';
-
 
 import {
   Container,
@@ -131,7 +130,7 @@ export function Scheduling() {
         <Button 
           title="Confirmar" 
           onPress={handleConfirmRental} 
-          enabled={!(!rentalPeriod.startFormatted || !rentalPeriod.endFormatted)}
+          enabled={!!rentalPeriod.startFormatted}
         />
       </Footer>
 
