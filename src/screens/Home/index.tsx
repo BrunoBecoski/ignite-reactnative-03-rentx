@@ -9,14 +9,14 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  // withSpring
+  withSpring
 }from 'react-native-reanimated';
 
 import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
 
 import { Car } from '../../components/Car';
-import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 import Logo from '../../assets/logo.svg';
 
@@ -56,8 +56,8 @@ export function Home() {
       positionY.value = ctx.positionY + event.translationY;
     },
     onEnd() {
-      // positionX.value = withSpring(0);
-      // positionY.value = withSpring(0);
+      positionX.value = withSpring(0);
+      positionY.value = withSpring(0);
     }
   });
 
@@ -115,7 +115,7 @@ export function Home() {
         </HeaderContent>
       </Header>
 
-      { loading ? <Load /> : 
+      { loading ? <LoadAnimation /> : 
         <CarList
           data={cars}
           keyExtractor={item => String(item.id)}
