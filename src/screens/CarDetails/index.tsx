@@ -58,7 +58,7 @@ export function CarDetails() {
         [0, 200],
         [200, 70],
         Extrapolate.CLAMP
-      ),
+      )
     }
   });
 
