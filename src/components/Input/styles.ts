@@ -1,6 +1,10 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { TextInput }from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+
+interface Props {
+  isFocused: boolean;
+}
 
 export const Container = styled.View`
   flex-direction: row;
@@ -8,7 +12,7 @@ export const Container = styled.View`
   margin-bottom: 8px;
 `;
 
-export const IconContainer = styled.View`
+export const IconContainer = styled.View<Props>`
   height: 55px;
   width: 55px;
 
@@ -18,9 +22,16 @@ export const IconContainer = styled.View`
   background-color: ${({ theme }) => theme.colors.background_secondary};
 
   margin-right: 2px;
+
+  border-bottom-width: 2px;
+  border-bottom-color: transparent;
+  
+  ${({ isFocused, theme}) => isFocused && css`
+    border-bottom-color: ${theme.colors.main};
+  `};
 `;
 
-export const InputText = styled(TextInput)`
+export const InputText = styled(TextInput)<Props>`
   flex: 1;
 
   font-size: ${RFValue(15)}px;
@@ -30,4 +41,11 @@ export const InputText = styled(TextInput)`
   background-color: ${({ theme }) => theme.colors.background_secondary};
 
   padding: 0 24px;
+
+  border-bottom-width: 2px;
+  border-bottom-color: transparent;
+  
+  ${({ isFocused, theme}) => isFocused && css`
+    border-bottom-color: ${theme.colors.main};
+  `};
 `;
