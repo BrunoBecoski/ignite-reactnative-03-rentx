@@ -27,7 +27,7 @@ export const Title = styled.Text`
 
   color: ${({ theme }) => theme.colors.title};
 
-  margin-top: 60px;
+  margin-top: ${RFValue(30)}px;
   margin-bottom: 16px;
 `;
 
@@ -41,7 +41,7 @@ export const SubTitle = styled.Text`
 
 export const Form = styled.View`
   width: 100%;
-  margin-top: 64px;
+  margin-top: ${RFValue(25)}px;
   margin-bottom: 16px;
 `;
 

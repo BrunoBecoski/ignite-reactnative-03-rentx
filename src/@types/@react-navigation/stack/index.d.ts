@@ -8,6 +8,6 @@ declare namespace ReactNavigation {
     CarDetails: NavigationStackProps<string>;  
     Scheduling: NavigationStackProps<string>;  
     SchedulingDetails: NavigationStackProps<string>;  
-    SchedulingComplete: NavigationStackProps<string>;  
+    Confirmation: NavigationStackProps<string>;  
   }
 }

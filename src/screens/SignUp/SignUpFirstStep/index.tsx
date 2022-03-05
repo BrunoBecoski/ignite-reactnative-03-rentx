@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Alert,
   Keyboard,
-  KeyboardAvoidingView,
   StatusBar,
   TouchableWithoutFeedback
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 
 import { BackButton } from '../../../components/BackButton';
@@ -29,10 +27,10 @@ export function SignUpFirstStep() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [driverLicense, setDriverLicense] = useState('');
+  const [isKeyboardEnabled, setIsKeyboardEnabled] = useState(false);
 
   const navigation = useNavigation();
-  const theme = useTheme();
-  
+
   function handleBack() {
     navigation.goBack();
   }
@@ -60,64 +58,86 @@ export function SignUpFirstStep() {
     }
   }
 
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () =>{
+      setIsKeyboardEnabled(true);
+    });
+  
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardEnabled(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    }
+  }, []);
+  
   return (
-    <KeyboardAvoidingView  behavior="position" enabled >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <StatusBar 
-            barStyle="dark-content"
-            backgroundColor={theme.colors.background_primary}
-            translucent
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <StatusBar 
+          barStyle="dark-content"
+          backgroundColor="transparent"
+          translucent
+        />
+
+        <Header>
+          <BackButton onPress={handleBack} />
+          <Steps>
+            <Bullet active />
+            <Bullet />
+          </Steps>
+        </Header>
+        
+        {
+          !isKeyboardEnabled &&
+          <>
+            <Title>
+              Crie sua{'\n'}conta
+            </Title>
+            <SubTitle>
+              Faça seu cadastro de{'\n'}
+              forma rápida e fácil
+            </SubTitle>
+          </>
+        }
+
+        <Form>
+          <FormTitle>1. Dados</FormTitle>
+
+          <Input 
+            iconName="user"
+            placeholder="Nome"
+            autoCapitalize="words"
+            onChangeText={setName}
+            value={name}
           />
-          <Header>
-            <BackButton onPress={handleBack} />
-            <Steps>
-              <Bullet active />
-              <Bullet />
-            </Steps>
-          </Header>
 
-          <Title>
-            Crie sua{'\n'}conta
-          </Title>
-          <SubTitle>
-            Faça seu cadastro de{'\n'}
-            forma rápida e fácil
-          </SubTitle>
-
-          <Form>
-            <FormTitle>1. Dados</FormTitle>
-
-            <Input 
-              iconName="user"
-              placeholder="Nome"
-              onChangeText={setName}
-              value={name}
-            />
-
-            <Input 
-              iconName="mail"
-              placeholder="E-mail"
-              keyboardType="email-address"
-              onChangeText={setEmail}
-              value={email}
-            />
-
-            <Input 
-              iconName="credit-card"
-              placeholder="CNH"
-              keyboardType="numeric"
-              onChangeText={setDriverLicense}
-              value={driverLicense}
-            />
-          </Form>
-
-          <Button 
-            title="Próximo"
-            onPress={handleNextStep}
+          <Input 
+            iconName="mail"
+            placeholder="E-mail"
+            keyboardType="email-address"
+            autoCorrect={false}
+            autoCapitalize="none"
+            onChangeText={setEmail}
+            value={email}
           />
-        </Container>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+
+          <Input 
+            iconName="credit-card"
+            placeholder="CNH"
+            keyboardType="numeric"
+            onChangeText={setDriverLicense}
+            value={driverLicense}
+          />
+        </Form>
+
+        <Button 
+          title="Próximo"
+          onPress={handleNextStep}
+        />
+      </Container>
+    </TouchableWithoutFeedback>
   );
 }

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Alert,
   Keyboard,
-  KeyboardAvoidingView,
   StatusBar,
   TouchableWithoutFeedback
 } from 'react-native';
@@ -35,13 +34,13 @@ interface Params {
 export function SignUpSecondStep() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [isKeyboardEnabled, setIsKeyboardEnabled] = useState(false);
   
   const navigation = useNavigation();
   const route = useRoute();
   const theme = useTheme();
   
   const { user } = route.params as Params;
-  console.log(user);
 
   function handleBack() {
     navigation.goBack();
@@ -55,59 +54,83 @@ export function SignUpSecondStep() {
     if(password != passwordConfirm) {
       return Alert.alert('Opa', 'As senhas não são iguais');
     }
+
+    navigation.navigate('Confirmation', {
+      title: 'Conta Criada!',
+      message: `Agora é só fazer login\ne aproveitar.`,
+      nextScreenRoute: 'SignIn'
+    });
   }
 
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () =>{
+      setIsKeyboardEnabled(true);
+    });
+  
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardEnabled(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    }
+  }, []);
+    
   return (
-    <KeyboardAvoidingView  behavior="position" enabled >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <StatusBar 
-            barStyle="dark-content"
-            backgroundColor={theme.colors.background_primary}
-            translucent
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Container>
+        <StatusBar 
+          barStyle="dark-content"
+          backgroundColor="transparent"
+          translucent
+        />
+        <Header>
+          <BackButton onPress={handleBack} />
+          <Steps>
+            <Bullet />
+            <Bullet active />
+          </Steps>
+        </Header>
+
+        {
+          !isKeyboardEnabled &&
+          <>
+            <Title>
+              Crie sua{'\n'}conta
+            </Title>
+            <SubTitle>
+              Faça seu cadastro de{'\n'}
+              forma rápida e fácil
+            </SubTitle>
+          </>
+        }
+
+        <Form>
+          <FormTitle>2. Senha</FormTitle>
+
+          <PasswordInput 
+            iconName="lock"
+            placeholder="Senha"
+            onChangeText={setPassword}
+            value={password}
           />
-          <Header>
-            <BackButton onPress={handleBack} />
-            <Steps>
-              <Bullet active />
-              <Bullet />
-            </Steps>
-          </Header>
 
-          <Title>
-            Crie sua{'\n'}conta
-          </Title>
-          <SubTitle>
-            Faça seu cadastro de{'\n'}
-            forma rápida e fácil
-          </SubTitle>
-
-          <Form>
-            <FormTitle>2. Senha</FormTitle>
-
-            <PasswordInput 
-              iconName="lock"
-              placeholder="Senha"
-              onChangeText={setPassword}
-              value={password}
-            />
-
-            <PasswordInput 
-              iconName="lock"
-              placeholder="Repetir Senha"
-              onChangeText={setPasswordConfirm}
-              value={passwordConfirm}
-            />
-
-          </Form>
-
-          <Button 
-            title="Cadastrar"
-            color={theme.colors.success}
-            onPress={handleRegister}
+          <PasswordInput 
+            iconName="lock"
+            placeholder="Repetir Senha"
+            onChangeText={setPasswordConfirm}
+            value={passwordConfirm}
           />
-        </Container>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+
+        </Form>
+
+        <Button 
+          title="Cadastrar"
+          color={theme.colors.success}
+          onPress={handleRegister}
+        />
+      </Container>
+    </TouchableWithoutFeedback>
   );
 }
