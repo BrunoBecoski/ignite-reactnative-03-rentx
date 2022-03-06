@@ -69,7 +69,7 @@ export function SchedulingDetails() {
   const routes = useRoute();
   const { car, dates } = routes.params as Params;
 
-  const rentTotal = dates.length * car.rent.price;
+  const rentTotal = dates.length * car.price;
 
   const scrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler( event => {
@@ -190,8 +190,8 @@ export function SchedulingDetails() {
           </Description>
 
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>R$ {car.rent.price}</Price>
+            <Period>{car.period}</Period>
+            <Price>R$ {car.price}</Price>
           </Rent>
         </Details>
 
@@ -237,7 +237,7 @@ export function SchedulingDetails() {
         <RentalPrice>
           <RentalPriceLabel>TOTAL</RentalPriceLabel>
           <RentalPriceDetails>
-            <RentalPriceQuota>{`R$ ${car.rent.price} x${dates.length} diárias`}</RentalPriceQuota>
+            <RentalPriceQuota>{`R$ ${car.price} x${dates.length} diárias`}</RentalPriceQuota>
             <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>
