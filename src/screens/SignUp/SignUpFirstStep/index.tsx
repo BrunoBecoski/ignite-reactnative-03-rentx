@@ -109,7 +109,6 @@ export function SignUpFirstStep() {
           <Input 
             iconName="user"
             placeholder="Nome"
-            autoCapitalize="words"
             onChangeText={setName}
             value={name}
           />
