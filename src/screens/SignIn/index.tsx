@@ -9,6 +9,8 @@ import {
 import * as Yup from 'yup';
 import { useTheme } from 'styled-components';
 
+import { useAuth } from '../../hooks/auth';
+
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { Button } from '../../components/Button';
@@ -29,6 +31,7 @@ export function SignIn() {
 
   const theme = useTheme();
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   async function handleSignIn() {
     try {
@@ -42,6 +45,8 @@ export function SignIn() {
 
       await schema.validate({ email, password });
       Alert.alert('Tudo certo!');
+
+      signIn({ email, password });
     } catch(error) {
       if(error instanceof Yup.ValidationError) {
         Alert.alert('Opa', error.message);
