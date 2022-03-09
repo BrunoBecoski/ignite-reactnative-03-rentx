@@ -109,6 +109,7 @@ export function SignUpFirstStep() {
           <Input 
             iconName="user"
             placeholder="Nome"
+            autoCorrect={false}
             onChangeText={setName}
             value={name}
           />
