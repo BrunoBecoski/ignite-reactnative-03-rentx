@@ -11,14 +11,13 @@ export function Routes(){
   const { user, loading } = useAuth();
 
   return (  
-    // loading 
-      // ? <LoadAnimation /> 
-      // : <NavigationContainer>
-      <NavigationContainer>
-        { user.id 
-          ? <AppTabRoutes /> 
-          : <AuthRoutes />
-        }
-      </NavigationContainer>
+    loading 
+      ? <LoadAnimation /> 
+      : <NavigationContainer>
+          { user.id 
+            ? <AppTabRoutes /> 
+            : <AuthRoutes />
+          }
+        </NavigationContainer>
   );
 }
