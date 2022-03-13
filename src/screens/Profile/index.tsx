@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
+import { useNetInfo } from '@react-native-community/netinfo';
 import * as ImagePicker from 'expo-image-picker';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
@@ -43,6 +44,7 @@ export function Profile() {
   const [driverLicense, setDriverLicense] = useState(user.driver_license);
   const [isKeyboardEnabled, setIsKeyboardEnabled] = useState(false);
 
+  const netInfo = useNetInfo();
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -51,7 +53,11 @@ export function Profile() {
   }
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
-    setOption(optionSelected);
+    if(netInfo.isConnected === false && optionSelected === 'passwordEdit') {
+      Alert.alert('Você está Offline', 'Para mudar a senha, conecte-se a Internet.');
+    } else {
+      setOption(optionSelected);
+    }
   }
 
   async function handleAvatarSelect() {
