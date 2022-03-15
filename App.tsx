@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from 'styled-components';
@@ -19,6 +20,9 @@ import {
 
 import theme from './src/styles/theme';
 
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state'
+]);
 
 export default function App() {
   const [fontsLoaded] = useFonts({

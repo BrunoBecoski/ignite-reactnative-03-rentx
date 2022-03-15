@@ -65,6 +65,4 @@ export const Type = styled.View``;
 export const CarImage = styled(FastImage)`
   width: 167px;
   height: 85px;
-
-  transform: scaleX(-1);
 `;
